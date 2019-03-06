@@ -18,8 +18,7 @@ import Post from './src/components/Post';
 
 import FotosServiceFactory from './src/services/FotosServiceFactory';
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
 
   constructor(props) {
 
@@ -38,7 +37,57 @@ export default class App extends Component<Props> {
       .catch(error => console.log(error));
   };
   
-  
+  like = idFoto => {
+
+    const foto = this.state.fotos.find(foto => foto.id === idFoto);
+
+    let novaLista = [];
+
+    if (!foto.likeada)
+      novaLista = [
+        ...foto.likers,
+        { login: 'meuUsuario' }
+      ];
+    else
+      novaLista = foto.likers.filter(liker => liker.login !== 'meuUsuario');
+
+    const fotoAtualizada = {
+      ...foto,
+      likeada: !foto.likeada,
+      likers: novaLista
+    };
+
+    const fotos = this.state.fotos
+      .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto);
+
+    this.setState({ fotos: fotos });
+  }  
+
+  adicionaComentario = (idFoto, valorComentario, inputComentario) => {
+
+    if (valorComentario === '')
+      return;
+
+    const foto = this.state.fotos.find(foto => foto.id === idFoto);
+
+    const novaLista = [...foto.comentarios, {
+      id: valorComentario,
+      login: 'meuUsuario',
+      texto: valorComentario
+    }];
+
+    const fotoAtualizada = {
+      ...foto,
+      comentarios: novaLista
+    };
+
+    const fotos = this.state.fotos
+      .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto);
+
+    this.setState({fotos});
+
+    inputComentario.clear();
+  };   
   
   render() {
 
@@ -49,7 +98,9 @@ export default class App extends Component<Props> {
           keyExtractor={item => String(item.id)}
           data={fotos}
           renderItem={ ({item}) =>
-            <Post foto={item}/>
+            <Post foto={item} 
+              likeCallback={this.like} 
+              comentarioCallback={this.adicionaComentario} />
           }
       />
     );
