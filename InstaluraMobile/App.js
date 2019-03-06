@@ -11,10 +11,6 @@ import React, {Component} from 'react';
 import {
   Platform,
   StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
   FlatList
 } from 'react-native';
 
@@ -60,9 +56,11 @@ export default class App extends Component<Props> {
   }
 }
 
+const margem = Platform.OS === 'ios' ? 20 : 0;
+
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20
+        marginTop: margem
     }
 });
 
