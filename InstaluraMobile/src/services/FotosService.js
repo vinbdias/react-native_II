@@ -1,13 +1,13 @@
-import { Platform } from 'react-native';
+import Service from './Service';
 
-const localhost = Platform.OS === 'ios' ? 'http://localhost:8080' : 'http://10.0.2.2:8080';
-
-export default class FotosService {
+export default class FotosService extends Service {
 
     constructor() {
 
+        super();
+
         this.apiUrl = 'https://instalura-api.herokuapp.com/api/public/fotos/rafael';
-        //this.apiUrl = `${localhost}/api/public/fotos/rafael`;
+        //this.apiUrl = `${this.localhost}/api/public/fotos/rafael`;
     }
 
     obterFotos() {
