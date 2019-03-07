@@ -6,12 +6,8 @@ export default class FotosService extends Service {
 
         super();
 
-        this.apiUrl = 'https://instalura-api.herokuapp.com/api/public/fotos/rafael';
-        //this.apiUrl = `${this.localhost}/api/public/fotos/rafael`;
+        this.serviceUrl = `${this.host}/fotos/rafael`;        
     }
 
-    obterFotos() {
-
-        return fetch(`${this.apiUrl}`);
-    }
+    obterFotos = () => this.get(`${this.serviceUrl}`);
 }
